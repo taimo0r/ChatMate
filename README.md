@@ -20,9 +20,9 @@ Welcome to Chatmate, your AI Chatbot companion for Android! 📱✨
 
 - **Retrofit Library:** Implements Retrofit for streamlined data fetching from the Cohere API.
 
-<img src="Screenshots/Chatmate_HomeScreen.jpeg" alt="Home Screen" width="400"/>  
-  
 <img src="Screenshots/Chatmate_chat.jpeg" alt="Home Screen" width="400"/>  
+  
+<img src="Screenshots/Chatmate_HomeScreen.jpeg" alt="Home Screen" width="400"/>  
 
 ## Getting Started
 
