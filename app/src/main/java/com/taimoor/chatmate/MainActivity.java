@@ -11,9 +11,7 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -106,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
                     ApiResponse model = response.body();
                     chatsModelArrayList.add(new ChatsModel(model.getGenerations().get(0).getText(), BOT_KEY));
-                    chatsRecycler.scrollToPosition(chatsModelArrayList.size()-1);
+                    chatsRecycler.scrollToPosition(chatsModelArrayList.size() - 1);
                     chatRecyclerAdapter.notifyDataSetChanged();
                 }
             }
@@ -179,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Create a TextView to display the recognized text
         TextView textView = new TextView(this);
-        textView.setPadding(10,0,0,0);
+        textView.setPadding(10, 0, 0, 0);
         textView.setText(recognizedText);
         textView.setTextIsSelectable(true);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -199,11 +197,6 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-    private CharSequence addClickableSpan(String text, ClickableSpan clickableSpan) {
-        Spannable spannableString = Spannable.Factory.getInstance().newSpannable(text);
-        spannableString.setSpan(clickableSpan, 0, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return spannableString;
-    }
 
     private void copyToClipboard(String text) {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
