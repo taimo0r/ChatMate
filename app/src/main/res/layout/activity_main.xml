@@ -17,6 +17,7 @@
 
         <ImageView
             android:id="@+id/profile_image"
+            android:contentDescription="App Logo of API Used"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
@@ -39,7 +40,10 @@
         android:layout_alignParentBottom="true"
         android:id="@+id/idRlMsg">
 
+
         <EditText
+            android:inputType="text"
+            android:autofillHints="emailAddress"
             android:id="@+id/idEdtMsg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,9 +55,26 @@
             android:layout_toStartOf="@id/idFABSend"
             android:fontFamily="@font/opensansregular"
             android:hint="Enter Message"
-            android:maxLines="2"/>
+            android:maxLines="2"
+            android:paddingEnd="35dp" />
+
+        <ImageButton
+            android:contentDescription="camera button to open camera"
+            android:id="@+id/cameraBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/idFABSend"
+            android:layout_alignBottom="@+id/idFABSend"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_toStartOf="@id/idFABSend"
+            android:layout_marginEnd="10dp"
+            android:background="#00000000"
+            android:src="@drawable/baseline_photo_camera_24"
+            app:tint="@color/colorPrimary" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:contentDescription="send button to send message."
             android:id="@+id/idFABSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
