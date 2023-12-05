@@ -1,11 +1,10 @@
-package com.taimoor.chatmate;
+package com.taimoor.chatmate.API;
 
 import com.taimoor.chatmate.ResponseModels.ApiResponse;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Url;

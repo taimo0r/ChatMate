@@ -29,6 +29,10 @@ import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
+import com.taimoor.chatmate.API.RetrofitApi;
+import com.taimoor.chatmate.API.RetrofitClient;
+import com.taimoor.chatmate.ChatRecyclerView.ChatRecyclerAdapter;
+import com.taimoor.chatmate.ChatRecyclerView.ChatsModel;
 import com.taimoor.chatmate.ResponseModels.ApiResponse;
 
 import java.util.ArrayList;

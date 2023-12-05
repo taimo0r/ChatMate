@@ -1,4 +1,4 @@
-package com.taimoor.chatmate;
+package com.taimoor.chatmate.ChatRecyclerView;
 
 public class ChatsModel {
 
