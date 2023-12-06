@@ -5,6 +5,9 @@ import android.widget.Toast;
 
 import com.taimoor.chatmate.ResponseModels.ApiResponse;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,12 +23,18 @@ public class RetrofitClient {
 
     private static final String BASE_URL = "https://api.cohere.ai/v1/";
 
+    OkHttpClient okHttpClient = new OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS) // Example: 30 seconds
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build();
+
     Context context;
 
     Retrofit retrofit = new Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build();
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build();
 
     public RetrofitClient(Context context) {
         this.context = context;
@@ -45,10 +54,10 @@ public class RetrofitClient {
     }
 
 
-    public void getGenerateAIResponse(GenerateMessageListener listener, RequestBody body){
+    public void getGenerateAIResponse(GenerateMessageListener listener, RequestBody body) {
 
         generateApiService apiService = retrofit.create(generateApiService.class);
-        Call<ApiResponse> call = apiService.generate("generate",body);
+        Call<ApiResponse> call = apiService.generate("generate", body);
 
         call.enqueue(new Callback<ApiResponse>() {
             @Override

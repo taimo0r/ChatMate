@@ -1,6 +1,5 @@
 package com.taimoor.chatmate;
 
-
 import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -30,7 +29,6 @@ import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import com.taimoor.chatmate.API.GenerateMessageListener;
-import com.taimoor.chatmate.API.RetrofitApi;
 import com.taimoor.chatmate.API.RetrofitClient;
 import com.taimoor.chatmate.ChatRecyclerView.ChatRecyclerAdapter;
 import com.taimoor.chatmate.ChatRecyclerView.ChatsModel;
@@ -40,9 +38,6 @@ import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
