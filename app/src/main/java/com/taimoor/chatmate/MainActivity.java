@@ -29,6 +29,7 @@ import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
+import com.taimoor.chatmate.API.GenerateMessageListener;
 import com.taimoor.chatmate.API.RetrofitApi;
 import com.taimoor.chatmate.API.RetrofitClient;
 import com.taimoor.chatmate.ChatRecyclerView.ChatRecyclerAdapter;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private final String BOT_KEY = "bot";
     private ArrayList<ChatsModel> chatsModelArrayList;
     private ChatRecyclerAdapter chatRecyclerAdapter;
-    private RetrofitApi apiService;
+    private RetrofitClient  client;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         sendMsgFAB = findViewById(R.id.idFABSend);
         cameraBtn = findViewById(R.id.cameraBtn);
 
-        apiService = RetrofitClient.getRetrofitInstance().create(RetrofitApi.class);
+        client = new RetrofitClient(this);
 
         chatsModelArrayList = new ArrayList<>();
         chatRecyclerAdapter = new ChatRecyclerAdapter(this, chatsModelArrayList);
@@ -95,32 +96,37 @@ public class MainActivity extends AppCompatActivity {
         MediaType mediaType = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(mediaType, "{\"truncate\":\"END\",\"return_likelihoods\":\"NONE\",\"prompt\":\" " + message + " \"}");
 
-
         String USER_KEY = "user";
         chatsModelArrayList.add(new ChatsModel(message, USER_KEY));
         chatRecyclerAdapter.notifyDataSetChanged();
 
-        Call<ApiResponse> call = apiService.generate("generate", body);
-        call.enqueue(new Callback<ApiResponse>() {
-            @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                if (response.isSuccessful()) {
-
-                    ApiResponse model = response.body();
-                    chatsModelArrayList.add(new ChatsModel(model.getGenerations().get(0).getText(), BOT_KEY));
-                    chatsRecycler.scrollToPosition(chatsModelArrayList.size() - 1);
-                    chatRecyclerAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
-                chatsModelArrayList.add(new ChatsModel("Please revert your question", BOT_KEY));
-                chatRecyclerAdapter.notifyDataSetChanged();
-            }
-        });
+        client.getGenerateAIResponse(listener, body);
     }
 
+    private final GenerateMessageListener listener = new GenerateMessageListener() {
+        @Override
+        public void onFetch(ApiResponse response, String message) {
+            if (response.getId().isEmpty()) {
+                Toast.makeText(MainActivity.this, "An Error occurred", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            showResponse(response);
+        }
+
+        @Override
+        public void onError(String message) {
+            chatsModelArrayList.add(new ChatsModel("Please revert your question", BOT_KEY));
+            chatRecyclerAdapter.notifyDataSetChanged();
+        }
+    };
+
+    private void showResponse(ApiResponse response) {
+
+        chatsModelArrayList.add(new ChatsModel(response.getGenerations().get(0).getText(), BOT_KEY));
+        chatsRecycler.scrollToPosition(chatsModelArrayList.size() - 1);
+        chatRecyclerAdapter.notifyDataSetChanged();
+
+    }
 
     private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
